@@ -24,11 +24,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','string'],
+            'name' => ['required', 'string'],
             'gender' => ['required', new Enum(GenderType::class)],
-            'birth_date' => ['required','date'],
-            'email' => ['required','email','unique:users,email'],
-            'password' => ['required','string'],
+            'birth_date' => ['required', 'date'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string'],
         ];
     }
 

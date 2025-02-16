@@ -24,10 +24,10 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes','string'],
+            'name' => ['sometimes', 'string'],
             'gender' => ['sometimes', new Enum(GenderType::class)],
-            'birth_date' => ['sometimes','date'],
-            'password' => ['sometimes','string'],
+            'birth_date' => ['sometimes', 'date'],
+            'password' => ['sometimes', 'string'],
         ];
     }
 
