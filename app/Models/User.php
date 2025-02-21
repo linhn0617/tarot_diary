@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'birth_date',
     ];
 
     /**
@@ -43,6 +45,19 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'birth_date' => 'date',
         ];
+    }
+
+    // 關聯日記（diaries）
+    public function diaries()
+    {
+        return $this->hasMany(Diary::class);
+    }
+
+    // 關聯社交帳號（user_social_accounts）
+    public function socialAccounts()
+    {
+        return $this->hasMany(UserSocialAccount::class);
     }
 }
