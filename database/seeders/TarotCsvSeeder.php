@@ -19,11 +19,11 @@ class TarotCsvSeeder extends Seeder
 
         // 讀取每一行資料
         while (($data = fgetcsv($tarotCsvFile)) !== false) {
-            if (!$firstline) {
+            if (! $firstline) {
                 // 插入資料到 tarots 資料表
                 Tarot::create([
-                    'name'       => $data[0],  // 第一欄：塔羅牌名稱
-                    'element'    => $data[1],  // 第二欄：元素
+                    'name' => $data[0],  // 第一欄：塔羅牌名稱
+                    'element' => $data[1],  // 第二欄：元素
                     'image_path' => $data[2],  // 第三欄：圖片路徑
                 ]);
             }
