@@ -23,12 +23,12 @@ trait ApiResponse
         ], $statuscode);
     }
 
-    public function responseWithToken(string $message, array $data, int $statusCode = 200): JsonResponse
+    public function responseWithToken(string $message, string $token, int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status' => 'success',
             'message' => $message,
-            'data' => $data,
+            'token' => $token,
         ], $statusCode);
     }
 }
