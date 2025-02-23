@@ -15,4 +15,4 @@ jobs:
           verboseMode: true
           testMode: true
           configPath: "./pint.json"
-          pintVersion: 1.15.0
+          pintVersion: 1.21.0
