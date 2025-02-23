@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Tarot;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TarotCsvSeeder extends Seeder
 {
@@ -12,6 +13,10 @@ class TarotCsvSeeder extends Seeder
      */
     public function run(): void
     {
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); // 關閉外鍵檢查
+        Tarot::truncate();   // 清空 tarots 資料表
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;'); // 重新開啟外鍵檢查
 
         // 打開 CSV 檔案
         $tarotCsvFile = fopen(database_path('data/table_tarots.csv'), 'r');
