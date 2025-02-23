@@ -18,7 +18,8 @@ class AuthController extends Controller
     public function __construct(
         private AuthService $authService,
         private EmailVerifyService $emailVerifyService
-    ) {}
+    ) {
+    }
 
     public function register(RegisterRequest $registerRequest): JsonResponse
     {
@@ -75,6 +76,7 @@ class AuthController extends Controller
     public function refresh(): JsonResponse
     {
         try {
+            // @phpstan-ignore-line
             $token = Auth::refresh();
 
             return $this->responseWithToken('刷新成功', $token, Response::HTTP_OK);
