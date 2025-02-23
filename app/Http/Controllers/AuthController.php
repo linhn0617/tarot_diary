@@ -76,7 +76,7 @@ class AuthController extends Controller
     public function refresh(): JsonResponse
     {
         try {
-            // @phpstan-ignore-line
+            // @phpstan-ignore-next-line
             $token = Auth::refresh();
 
             return $this->responseWithToken('刷新成功', $token, Response::HTTP_OK);
