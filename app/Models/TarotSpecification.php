@@ -11,10 +11,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_upright
  * @property string $message1
  * @property string $message2
- * 
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-
 class TarotSpecification extends Model
 {
     use HasFactory;
