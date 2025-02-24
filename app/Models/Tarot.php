@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $image_path
  * @property string $element
- * 
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Tarot extends Model
