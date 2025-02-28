@@ -6,10 +6,14 @@ use App\Models\User;
 
 class EmailVerifyService
 {
-    public function verifyEmail(int $id, string $hash): array
+    public function __construct(
+        private AuthService $authService
+    ) {}
+
+    public function verifyEmail(int $id, string $hash): void
     {
         // 進入DB並透過ID搜尋使用者
-        $user = $this->findUserById($id);
+        $user = $this->authService->findUserById($id);
 
         // 驗證使用者 ID 和 hash 是否匹配
         if (! $this->verifyEmailHash($user, $hash)) {
@@ -24,15 +28,6 @@ class EmailVerifyService
         // 將使用者的 email_verified_at 欄位標記為現在的時間
         $user->markEmailAsVerified();
 
-        return [
-            'status' => 'success',
-            'message' => 'Email verified successfully.',
-        ];
-    }
-
-    private function findUserById(int $id): User
-    {
-        return User::findOrFail($id);
     }
 
     private function verifyEmailHash(User $user, string $hash): bool

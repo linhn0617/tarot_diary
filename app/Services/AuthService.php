@@ -49,4 +49,9 @@ class AuthService
 
         return $token;
     }
+
+    public function findUserById(int $id): User
+    {
+        return User::findOrFail($id);
+    }
 }
