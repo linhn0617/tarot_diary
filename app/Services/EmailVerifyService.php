@@ -8,7 +8,8 @@ class EmailVerifyService
 {
     public function __construct(
         private AuthService $authService
-    ) {}
+    ) {
+    }
 
     public function verifyEmail(int $id, string $hash): void
     {
