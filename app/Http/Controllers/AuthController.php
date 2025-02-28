@@ -18,8 +18,7 @@ class AuthController extends Controller
     public function __construct(
         private AuthService $authService,
         private EmailVerifyService $emailVerifyService
-    ) {
-    }
+    ) {}
 
     public function register(RegisterRequest $registerRequest): JsonResponse
     {
