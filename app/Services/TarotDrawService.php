@@ -7,13 +7,13 @@ use App\Models\TarotSpecification;
 
 /**
  * Service class for drawing tarot cards.服務類別：塔羅牌抽取
- *
  * 此類別負責從 `tarot_specifications` 表中隨機抽取一張塔羅牌，並返回其相關資訊。
  */
 class TarotDrawService
 {
     /**
      * 隨機抽取一張塔羅牌，並返回牌的詳細資訊
+     *
      * @return array{tarot_id: int, image: string, name: string, is_upright: bool, message: string}
      */
     public function drawCard(): array
