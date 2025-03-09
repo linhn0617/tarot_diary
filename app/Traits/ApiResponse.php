@@ -12,7 +12,6 @@ trait ApiResponse
             'status' => 'success',
             'message' => $message,
         ], $statusCode);
-
     }
 
     public function error(string $message, int $statuscode = 400): JsonResponse
@@ -24,6 +23,15 @@ trait ApiResponse
     }
 
     public function responseWithToken(string $message, array $data, int $statusCode = 200): JsonResponse
+    {
+        return response()->json([
+            'status' => 'success',
+            'message' => $message,
+            'data' => $data,
+        ], $statusCode);
+    }
+
+    public function responseWithData(string $message, array $data, int $statusCode = 200): JsonResponse
     {
         return response()->json([
             'status' => 'success',

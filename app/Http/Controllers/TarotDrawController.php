@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Services\TarotDrawService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 class TarotDrawController extends Controller
 {
+    use ApiResponse;
+
     protected $tarotDrawService;
 
     public function __construct(TarotDrawService $tarotDrawService)
@@ -18,11 +21,6 @@ class TarotDrawController extends Controller
     {
         $tarotCard = $this->tarotDrawService->drawCard();
 
-        return response()->json([
-            'data' => [
-                'message' => '完成抽牌',
-                'tarot_card' => $tarotCard,
-            ],
-        ]);
+        return $this->responseWithData('完成抽牌', $tarotCard);
     }
 }
