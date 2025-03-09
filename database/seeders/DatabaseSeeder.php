@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(TarotCsvSeeder::class);
+        $this->call(TarotSpecificationSeeder::class);
     }
 }
