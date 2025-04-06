@@ -23,7 +23,7 @@ jobs:
 
       - name: SSH and deploy
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /var/www/tarot_diary
             git pull origin main
             composer install --no-dev --optimize-autoloader
@@ -33,15 +33,15 @@ jobs:
             php artisan view:cache
 
             # 設定 ~/.supervisorctl.conf 並寫入 Secrets 帳密
-            cat > ~/.supervisorctl.conf <<CONF
+            cat > ~/.supervisorctl.conf <<EOL
 [supervisorctl]
 serverurl=http://127.0.0.1:9001
 username=${{ secrets.EC2_SUPERVISOR_USER }}
 password=${{ secrets.EC2_SUPERVISOR_PASS }}
-CONF
+EOL
 
             # 重啟 Laravel queue worker
-            supervisorctl reread
-            supervisorctl update
-            supervisorctl restart laravel-worker:*
+            /usr/local/bin/supervisorctl reread
+            /usr/local/bin/supervisorctl update
+            /usr/local/bin/supervisorctl restart laravel-worker:*
           EOF
