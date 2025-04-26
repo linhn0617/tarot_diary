@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TarotDiaryController;
 use App\Http\Controllers\TarotDrawController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,9 @@ Route::prefix('auth')->group(function (): void {
     Route::middleware('auth:api')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
+        Route::post('/diaries', [TarotDiaryController::class, 'store']);
+        Route::get('/diaries/{id}', [TarotDiaryController::class, 'show']);
+        Route::put('/diaries/{id}', [TarotDiaryController::class, 'update']);
     });
 });
 
