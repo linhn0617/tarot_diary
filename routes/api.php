@@ -25,7 +25,7 @@ Route::prefix('auth')->group(function (): void {
 Route::get('/tarot/draw', [TarotDrawController::class, 'drawCard']);
 
 // Google 登入
-Route::prefix('auth/{provider}')->group(function () {
+Route::prefix('auth/{provider}')->group(function (): void {
     Route::get('redirect', [SocialAuthController::class, 'redirect']);
     Route::get('callback', [SocialAuthController::class, 'callback']);
 });
