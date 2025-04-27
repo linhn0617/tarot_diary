@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TarotDiaryRequest;
+use App\Http\Requests\UpdateTarotDiaryRequest;
 use App\Services\TarotDiaryService;
 use App\Traits\ApiResponse;
 use Carbon\Carbon;
@@ -21,27 +22,11 @@ class TarotDiaryController extends Controller
     }
 
     /**
-     * 取得登入使用者 ID，如未登入則回傳錯誤
-     */
-    private function getUserIdOrAbort()
-    {
-        $userId = Auth::id();
-        if (! $userId) {
-            abort(response()->json([
-                'status' => 'error',
-                'message' => '未登入，無法操作。',
-            ], 401));
-        }
-
-        return $userId;
-    }
-
-    /**
      * 新增日記
      */
-    public function store(TarotDiaryRequest $request)
+    public function store(TarotDiaryRequest $request): \Illuminate\Http\JsonResponse
     {
-        $userId = $this->getUserIdOrAbort();
+        $userId = Auth::id();
 
         $this->service->createDiary($userId, $request->validated());
 
@@ -51,9 +36,9 @@ class TarotDiaryController extends Controller
     /**
      * 取得指定日記
      */
-    public function show($id, Request $request)
+    public function show($id, Request $request): \Illuminate\Http\JsonResponse
     {
-        $userId = $this->getUserIdOrAbort();
+        $userId = Auth::id();
 
         // 1. 取得指定日記
         $diary = $this->service->getDiary($userId, $id);
@@ -93,18 +78,14 @@ class TarotDiaryController extends Controller
     /**
      * 更新日記日期
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTarotDiaryRequest $request, $id): \Illuminate\Http\JsonResponse
     {
-        $userId = $this->getUserIdOrAbort();
+        $userId = Auth::id();
 
-        $validated = $request->validate([
-            'user_entry_text' => 'required|string|max:200',
-        ]);
-
-        $diary = $this->service->updateDiaryDate($userId, $id, $validated['user_entry_text']);
+        $diary = $this->service->updateDiaryDate($userId, $id, $request->validated());
 
         $data = [
-            'update_at' => $diary->updated_at->toDateString(),
+            'updated_at' => $diary->updated_at->toDateString(),
             'user_entry_text' => $diary->user_entry_text,
         ];
 
@@ -114,9 +95,9 @@ class TarotDiaryController extends Controller
     /**
      * 月曆模式取得日記（前後一個月）
      */
-    public function getMonthDiaries(Request $request)
+    public function getMonthDiaries(Request $request): \Illuminate\Http\JsonResponse
     {
-        $userId = $this->getUserIdOrAbort();
+        $userId = Auth::id();
 
         $selectedDate = $request->query('date');
 
