@@ -24,7 +24,7 @@ class SocialAuthService
 
         if ($existingUserSocialAccount) {
             // 已經綁定過，直接登入
-            $user = $existingUserSocialAccount->user()->firstOrFail();;
+            $user = $existingUserSocialAccount->user()->firstOrFail();
             $token = $this->loginAndCreateToken($user);
 
             return [
