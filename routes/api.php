@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\TarotDrawController;
 use Illuminate\Http\Request;
@@ -19,6 +20,9 @@ Route::prefix('auth')->group(function (): void {
     Route::middleware('auth:api')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
+
+        // 使用第三方登入進行初次註冊的使用者，需補填性別、生日，並可以修改名稱
+        Route::post('/complete-profile', [ProfileController::class, 'completeProfile']);
     });
 });
 
