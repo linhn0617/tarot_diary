@@ -10,13 +10,12 @@ class TarotDiaryService
     /**
      * 建立新日記
      */
-    public function createDiary($userId, $data)
+    public function createDiary($userId, $data): Diary
     {
         return Diary::create([
             'user_id' => $userId,
-            'tarot_specification_id' => $data['tarot_id'] = 1,
+            'tarot_specification_id' => $data['tarot_id'],
             'user_entry_text' => $data['user_entry_text'],
-            'created_at' => $data['created_at'] ?? now(),
         ]);
     }
 
@@ -25,29 +24,25 @@ class TarotDiaryService
      */
     public function getDiary(int $userId, int $diaryId): Diary
     {
-        return Diary::with(['tarot_specification.tarot'])
-            ->where('user_id', $userId)
-            ->findOrFail($diaryId);
+        return Diary::with(['tarot_specification.tarot'])->where('user_id', $userId)->findOrFail($diaryId);
     }
 
     /**
-     * 更新日記的日期
+     * 更新日記
      */
-    public function updateDiaryDate(int $userId, int $diaryId, string $content): Diary
+    public function updateDiaryDate(int $userId, int $diaryId, array $data): Diary
     {
         $diary = Diary::where('user_id', $userId)->findOrFail($diaryId);
 
-        $diary->user_entry_text = $content;
-        $diary->updated_at = now();
-        $diary->save();
+        $diary->update(['user_entry_text' => $data['user_entry_text'] ?? $diary->user_entry_text]);
 
-        return $diary;
+        return $diary->fresh();
     }
 
     /**
      * 取得月曆範圍日記(前後各一個月份)
      */
-    public function getMonthDiary($user_id, $baseDate = null)
+    public function getMonthDiary($user_id, $baseDate = null): \Illuminate\Database\Eloquent\Collection
     {
         // 1. 設定基準日期（如果未提供，則使用當前日期）如果提供 $baseDate，解析它，否則使用當前時間
         $baseDate = $baseDate ? Carbon::parse($baseDate) : Carbon::now();
