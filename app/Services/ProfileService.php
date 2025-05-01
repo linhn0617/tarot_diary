@@ -14,8 +14,7 @@ class ProfileService
         $user->update([
             'name' => $data['name'],
             'gender' => $data['gender'],
-            'birthday' => $data['birthday'],
-            'profile_completed' => true,
+            'birth_date' => $data['birth_date'],
         ]);
     }
 }
