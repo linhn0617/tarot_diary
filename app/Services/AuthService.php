@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Mails\QueuedVerifyEmail;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 
 class AuthService
 {
@@ -22,6 +24,8 @@ class AuthService
 
             // 寄送驗證信
             $user->notify(new QueuedVerifyEmail);
+
+            Event::dispatch(new Registered($user));
 
             return $user;
 
@@ -46,6 +50,11 @@ class AuthService
 
         // 取得 token
         $token = Auth::attempt($validatedData);
+
+        // 密碼錯誤或登入失敗
+        if (! $token) {
+            throw new \Exception('帳號或密碼錯誤');
+        }
 
         return $token;
     }
