@@ -42,7 +42,7 @@ class TarotDiaryService
     /**
      * 取得月曆範圍日記(前後各一個月份)
      */
-    public function getMonthDiary($user_id, $baseDate = null): \Illuminate\Database\Eloquent\Collection
+    public function getMonthDiary($user_id, $baseDate): \Illuminate\Database\Eloquent\Collection
     {
         // 1. 設定基準日期（如果未提供，則使用當前日期）如果提供 $baseDate，解析它，否則使用當前時間
         $baseDate = $baseDate ? Carbon::parse($baseDate) : Carbon::now();
