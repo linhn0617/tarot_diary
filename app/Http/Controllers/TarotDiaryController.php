@@ -28,7 +28,10 @@ class TarotDiaryController extends Controller
     {
         $userId = Auth::id();
 
-        $this->service->createDiary($userId, $request->validated());
+        // 驗證的資料
+        $validatedData = $request->validated();
+
+        $this->service->createDiary($userId, $validatedData);
 
         return $this->success('日記創建成功');
     }
