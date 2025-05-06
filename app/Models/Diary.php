@@ -21,7 +21,11 @@ class Diary extends Model
         return $this->belongsTo(User::class);
     }
 
-    // 定義與 Tarot 的關聯（多對一)
+    /**
+     * 關聯到 TarotSpecification 模型
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function tarot_specification()
     {
         return $this->belongsTo(TarotSpecification::class);

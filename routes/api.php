@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
+use App\Http\Controllers\TarotDiaryController;
 use App\Http\Controllers\TarotDrawController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,9 @@ Route::prefix('auth')->group(function (): void {
 
         // 使用第三方登入進行初次註冊的使用者，需補填性別、生日，並可以修改名稱
         Route::post('/complete-profile', [ProfileController::class, 'completeProfile']);
+        Route::post('/diaries', [TarotDiaryController::class, 'store']);
+        Route::get('/diaries/{id}', [TarotDiaryController::class, 'show']);
+        Route::put('/diaries/{id}', [TarotDiaryController::class, 'update']);
     });
 });
 
