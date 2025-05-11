@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\TarotDiaryController;
 use App\Http\Controllers\TarotDrawController;
@@ -36,4 +35,11 @@ Route::get('/tarot/draw', [TarotDrawController::class, 'drawCard']);
 Route::prefix('auth/{provider}')->group(function (): void {
     Route::get('redirect', [SocialAuthController::class, 'redirect']);
     Route::get('callback', [SocialAuthController::class, 'callback']);
+    Route::post('login', [SocialAuthController::class, 'login']);
+});
+
+// 取得使用者個人資料、編輯使用者個人資料
+Route::middleware('auth:api')->prefix('user')->group(function (): void {
+    Route::get('/me', [UserController::class, 'me']);
+    Route::put('/update', [UserController::class, 'update']);
 });

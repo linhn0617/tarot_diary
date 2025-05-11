@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\UserSocialAccount;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class SocialAuthService
 {
