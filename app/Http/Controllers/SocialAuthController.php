@@ -14,42 +14,58 @@ class SocialAuthController extends Controller
 {
     use ApiResponse;
 
+    public function __construct(
+        private SocialAuthService $socialAuthService
+    ) {}
+
     public function redirect(string $provider): JsonResponse
     {
-        /** @var AbstractProvider $driver */
-        $driver = Socialite::driver($provider);
+        try {
+            /** @var AbstractProvider $driver */
+            $driver = Socialite::driver($provider);
 
-        $url = $driver->stateless()->redirect()->getTargetUrl();
+            $url = $driver->stateless()->redirect()->getTargetUrl();
 
-        return $this->responseWithData('Redirect URL generated successfully.', [
-            'url' => $url,
-        ]);
+            return $this->responseWithData('Redirect URL generated successfully.', [
+                'url' => $url,
+            ]);
+        } catch (\Exception $e) {
+            return $this->error('Failed to generate redirect URL: '.$e->getMessage(), 500);
+        }
     }
 
     // 模擬前端去取得 access token
-    public function callback(string $provider): string
+    public function callback(string $provider): JsonResponse
     {
-        /** @var AbstractProvider $driver */
-        $driver = Socialite::driver($provider);
+        try {
+            /** @var AbstractProvider $driver */
+            $driver = Socialite::driver($provider);
 
-        /** @var SocialiteUser $socialiteUser */
-        $socialiteUser = $driver->stateless()->user();
+            /** @var SocialiteUser $socialiteUser */
+            $socialiteUser = $driver->stateless()->user();
 
-        return $socialiteUser->token;
+            return $this->responseWithData('Access token retrieved successfully.', ['access_token' => $socialiteUser->token]);
+        } catch (\Exception $e) {
+            return $this->error('Failed to get access token: '.$e->getMessage(), 500);
+        }
     }
 
-    public function login(Request $request, SocialAuthService $socialAuthService, string $provider): JsonResponse
+    public function login(Request $request, string $provider): JsonResponse
     {
-        /** @var AbstractProvider $driver */
-        $driver = Socialite::driver($provider);
+        try {
+            /** @var AbstractProvider $driver */
+            $driver = Socialite::driver($provider);
 
-        // 根據前端傳送的 access token 取得使用者資料
-        $accessToken = $request->input('access_token');
+            // 根據前端傳送的 access token 取得使用者資料
+            $accessToken = $request->input('access_token');
 
-        $socialiteUser = $driver->stateless()->userFromToken($accessToken);
+            $socialiteUser = $driver->stateless()->userFromToken($accessToken);
 
-        $data = $socialAuthService->handleCallback($provider, $socialiteUser);
+            $data = $this->socialAuthService->handleCallback($provider, $socialiteUser);
 
-        return $this->responseWithData('Authenticated successfully.', $data);
+            return $this->responseWithData('Authenticated successfully.', $data);
+        } catch (\Exception $e) {
+            return $this->error('Failed to authenticate: '.$e->getMessage(), 500);
+        }
     }
 }
