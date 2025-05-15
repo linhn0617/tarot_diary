@@ -26,11 +26,11 @@ class SocialAuthController extends Controller
 
             $url = $driver->stateless()->redirect()->getTargetUrl();
 
-            return $this->responseWithData('Redirect URL generated successfully.', [
+            return $this->responseWithData('成功生成 redirect URL', [
                 'url' => $url,
             ]);
         } catch (\Exception $e) {
-            return $this->error('Failed to generate redirect URL: '.$e->getMessage(), 500);
+            return $this->error('生成 redirect URL 失敗: '.$e->getMessage(), 500);
         }
     }
 
@@ -44,9 +44,9 @@ class SocialAuthController extends Controller
             /** @var SocialiteUser $socialiteUser */
             $socialiteUser = $driver->stateless()->user();
 
-            return $this->responseWithData('Access token retrieved successfully.', ['access_token' => $socialiteUser->token]);
+            return $this->responseWithData('順利取得 access token', ['access_token' => $socialiteUser->token]);
         } catch (\Exception $e) {
-            return $this->error('Failed to get access token: '.$e->getMessage(), 500);
+            return $this->error('取得 access token 失敗: '.$e->getMessage(), 500);
         }
     }
 
@@ -63,9 +63,9 @@ class SocialAuthController extends Controller
 
             $data = $this->socialAuthService->handleCallback($provider, $socialiteUser);
 
-            return $this->responseWithData('Authenticated successfully.', $data);
+            return $this->responseWithData('註冊成功', $data);
         } catch (\Exception $e) {
-            return $this->error('Failed to authenticate: '.$e->getMessage(), 500);
+            return $this->error('註冊失敗: '.$e->getMessage(), 500);
         }
     }
 }
