@@ -6,7 +6,7 @@ use App\Enums\GenderType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class UpdateProfileRequest extends FormRequest
+class CompleteProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,18 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
             'gender' => ['required', new Enum(GenderType::class)],
             'birth_date' => ['required', 'date'],
-            'password' => ['required', 'string'],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => '使用者名稱',
+            'name' => '姓名',
             'gender' => '性別',
             'birth_date' => '生日',
-            'password' => '密碼',
         ];
     }
 }
