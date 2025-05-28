@@ -17,8 +17,6 @@ Route::prefix('auth')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
 
-        // 使用第三方登入進行初次註冊的使用者，需補填性別、生日，並可以修改名稱
-        Route::post('/complete-profile', [ProfileController::class, 'completeProfile']);
         Route::post('/diaries', [TarotDiaryController::class, 'store']);
         Route::get('/diaries/{id}', [TarotDiaryController::class, 'show']);
         Route::put('/diaries/{id}', [TarotDiaryController::class, 'update']);
@@ -30,8 +28,7 @@ Route::get('/tarot/draw', [TarotDrawController::class, 'drawCard']);
 // Google 登入
 Route::prefix('auth/{provider}')->group(function (): void {
     Route::get('redirect', [SocialAuthController::class, 'redirect']);
-    Route::get('callback', [SocialAuthController::class, 'callback']);
-    Route::post('login', [SocialAuthController::class, 'login']);
+    Route::post('callback', [SocialAuthController::class, 'callback']);
 });
 
 // 取得使用者個人資料、編輯使用者個人資料
