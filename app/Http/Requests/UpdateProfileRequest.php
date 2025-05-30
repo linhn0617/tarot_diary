@@ -27,7 +27,14 @@ class UpdateProfileRequest extends FormRequest
             'name' => ['required', 'string'],
             'gender' => ['required', new Enum(GenderType::class)],
             'birth_date' => ['required', 'date'],
-            'password' => ['required', 'string'],
+            'password' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'min:8',
+                'max:16',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/',
+            ],
         ];
     }
 

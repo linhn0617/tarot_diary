@@ -23,7 +23,9 @@ class UserService
         $user->name = $validatedData['name'];
         $user->gender = $validatedData['gender'];
         $user->birth_date = $validatedData['birth_date'];
-        $user->password = $validatedData['password'];
+        if (isset($validatedData['password']) && ! empty($validatedData['password'])) {
+            $user->password = Hash::make($validatedData['password']);
+        }
         $user->save();
 
         return $user->toArray();
