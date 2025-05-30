@@ -28,7 +28,13 @@ class RegisterRequest extends FormRequest
             'gender' => ['required', new Enum(GenderType::class)],
             'birth_date' => ['required', 'date'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:16',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,16}$/',
+            ],
         ];
     }
 
