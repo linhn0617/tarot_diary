@@ -110,9 +110,9 @@ class TarotDiaryController extends Controller
             return [
                 'id' => $diary->id,
                 'created_at' => $diary->created_at->toDateString(),
-                'tarot_name' => $diary->tarotSpecification->tarot->name,
-                'is_upright' => $diary->tarotSpecification->is_upright,
-                'image' => $diary->tarotSpecification->tarot->image_path,
+                'tarot_name' => $diary->tarot_specification->tarot->name,
+                'is_upright' => $diary->tarot_specification->is_upright,
+                'image' => $diary->tarot_specification->tarot->image_path,
             ];
         })->toArray();
 
