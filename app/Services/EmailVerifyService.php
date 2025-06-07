@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Services\AuthService;
 
 class EmailVerifyService
 {
