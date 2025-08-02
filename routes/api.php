@@ -13,10 +13,10 @@ Route::prefix('auth')->group(function (): void {
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->name('verification.verify');
 
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+
     Route::middleware('auth:api')->group(function (): void {
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::post('/refresh', [AuthController::class, 'refresh']);
-
         Route::post('/diaries', [TarotDiaryController::class, 'store']);
         Route::get('/diaries/{id}', [TarotDiaryController::class, 'show']);
         Route::put('/diaries/{id}', [TarotDiaryController::class, 'update']);
