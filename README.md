@@ -30,7 +30,8 @@ cp .env.example .env
 ```
 3. Edit the .env file to configure MySQL username and password
 ```
-DB_DATABASE=happy_partner_blog
+DB_DATABASE=tarot_diary
+DB_HOST=mysql
 DB_USERNAME=laravel
 # password is required
 DB_PASSWORD=password
@@ -66,7 +67,7 @@ docker run --rm \
 ```
 8. Run migration and seeders:
 ```
-sail artisan migrate --seed
+./vendor/bin/sail artisan migrate --seed
 ```
 9. File Storage
 ```
