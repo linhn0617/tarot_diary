@@ -14,6 +14,9 @@ return RectorConfig::configure()
         __DIR__.'/routes',
         __DIR__.'/tests',
     ])
+    ->withSkip([
+        __DIR__.'/bootstrap/cache',
+    ])
     ->withPhpSets()
     ->withTypeCoverageLevel(10)
     ->withDeadCodeLevel(10)
