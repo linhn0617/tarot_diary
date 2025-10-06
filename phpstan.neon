@@ -4,3 +4,9 @@ parameters:
   level: 5
   paths:
     - app
+  scanFiles:
+    - vendor/php-open-source-saver/jwt-auth/src/Facades/JWTAuth.php
+  reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    - '#Call to an undefined static method Illuminate\\Support\\Facades\\Auth::refresh\(\)#'
+    - '#Call to an undefined static method PHPOpenSourceSaver\\JWTAuth\\Facades\\JWTAuth::fromUser\(\)#'
