@@ -14,7 +14,7 @@ class TarotDrawService
     /**
      * 隨機抽取一張塔羅牌，並返回牌的詳細資訊
      *
-     * @return array{tarot_id: int, image: string, name: string, is_upright: bool, message: string}
+     * @return array{tarot_specification_id: int, tarot_id: int, image: string, name: string, is_upright: bool, message: string}
      */
     public function drawCard(): array
     {
@@ -25,6 +25,7 @@ class TarotDrawService
         $message = rand(0, 1) ? $tarotSpecification->message1 : $tarotSpecification->message2;
 
         return [
+            'tarot_specification_id' => $tarotSpecification->id,
             'tarot_id' => $tarotSpecification->tarot->id, // @phpstan-ignore-line
             'image' => $tarotSpecification->tarot->image_path, // @phpstan-ignore-line
             'name' => $tarotSpecification->tarot->name, // @phpstan-ignore-line

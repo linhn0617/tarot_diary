@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Diary;
+use App\Models\TarotSpecification;
 use Carbon\Carbon;
 
 class TarotDiaryService
@@ -12,9 +13,19 @@ class TarotDiaryService
      */
     public function createDiary($userId, $data): Diary
     {
+        $tarotSpecificationId = $data['tarot_specification_id'] ?? null;
+
+        if (! $tarotSpecificationId) {
+            $tarotSpecification = TarotSpecification::where('tarot_id', $data['tarot_id'])
+                ->where('is_upright', $data['is_upright'])
+                ->firstOrFail();
+
+            $tarotSpecificationId = $tarotSpecification->id;
+        }
+
         return Diary::create([
             'user_id' => $userId,
-            'tarot_specification_id' => $data['tarot_id'],
+            'tarot_specification_id' => $tarotSpecificationId,
             'user_entry_text' => $data['user_entry_text'],
         ]);
     }
