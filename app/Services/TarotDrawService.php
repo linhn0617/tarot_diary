@@ -22,7 +22,7 @@ class TarotDrawService
         $tarotSpecification = TarotSpecification::with('tarot')->inRandomOrder()->firstOrFail(); // @phpstan-ignore-line
 
         // 隨機選擇一個關心小語
-        $message = rand(0, 1) ? $tarotSpecification->message1 : $tarotSpecification->message2;
+        $message = random_int(0, 1) ? $tarotSpecification->message1 : $tarotSpecification->message2;
 
         return [
             'tarot_specification_id' => $tarotSpecification->id,

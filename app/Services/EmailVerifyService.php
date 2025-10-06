@@ -7,7 +7,7 @@ use App\Models\User;
 class EmailVerifyService
 {
     public function __construct(
-        private AuthService $authService
+        private readonly AuthService $authService
     ) {}
 
     public function verifyEmail(int $id, string $hash): void

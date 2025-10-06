@@ -116,7 +116,6 @@ class SocialAuthService
     {
         Auth::login($user);
 
-        /** @phpstan-ignore-next-line */
         return JWTAuth::fromUser($user);
     }
 }

@@ -64,15 +64,13 @@ class TarotDiaryController extends Controller
                     : $diary->tarot_specification->message2,
             ],
             // 4. 這是月曆範圍內的其他日記
-            'month_diaries' => $diaries->map(function ($diary) {
-                return [
-                    'id' => $diary->id,
-                    'created_at' => $diary->created_at->toDateString(),
-                    'tarot_name' => $diary->tarot_specification->tarot->name,
-                    'is_upright' => $diary->tarot_specification->is_upright,
-                    'image' => $diary->tarot_specification->tarot->image_path,
-                ];
-            })->toArray(),
+            'month_diaries' => $diaries->map(fn ($diary): array => [
+                'id' => $diary->id,
+                'created_at' => $diary->created_at->toDateString(),
+                'tarot_name' => $diary->tarot_specification->tarot->name,
+                'is_upright' => $diary->tarot_specification->is_upright,
+                'image' => $diary->tarot_specification->tarot->image_path,
+            ])->toArray(),
         ];
 
         return $this->responseWithData('日記取得成功', $data);
@@ -106,15 +104,13 @@ class TarotDiaryController extends Controller
 
         $diaries = $this->service->getMonthDiary($userId, $selectedDate);
 
-        $data = $diaries->map(function ($diary) {
-            return [
-                'id' => $diary->id,
-                'created_at' => $diary->created_at->toDateString(),
-                'tarot_name' => $diary->tarot_specification->tarot->name,
-                'is_upright' => $diary->tarot_specification->is_upright,
-                'image' => $diary->tarot_specification->tarot->image_path,
-            ];
-        })->toArray();
+        $data = $diaries->map(fn ($diary): array => [
+            'id' => $diary->id,
+            'created_at' => $diary->created_at->toDateString(),
+            'tarot_name' => $diary->tarot_specification->tarot->name,
+            'is_upright' => $diary->tarot_specification->is_upright,
+            'image' => $diary->tarot_specification->tarot->image_path,
+        ])->toArray();
 
         return $this->responseWithData('日記清單取得成功', $data);
     }
